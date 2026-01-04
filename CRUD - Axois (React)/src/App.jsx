@@ -1,8 +1,15 @@
-import React from 'react'
+
+import Posts from "./components/Posts";
 
 function App() {
+
+
+ 
+
   return (
-    <div>App</div>
+    <div id="main">
+       <Posts></Posts>
+    </div>
   )
 }
 
