@@ -1,21 +1,24 @@
 import { useState,useEffect } from "react"
 import { getPosts } from "../api/postAPI"
+import { DeletePosts } from "../api/postAPI"
 
-function Posts() {
+function Posts({data,setData,setEditable,editable}) {
 
-    const [data, setData] = useState([])
+  
+ 
 
-    async function getPostsData() {
-        const res = await getPosts()
-        setData(res.data)
 
+     async function handleDelete(id){
+        await DeletePosts(id)
+        setData(preData=> preData.filter((data)=>{
+          return data.id !== id
+        }))
+         
     }
 
-    useEffect(() => {
-        getPostsData()
-        console.log(data);
-
-    }, [])
+    function handleEdit(post){
+        setEditable(post)
+    }
 
 
     return (
@@ -28,8 +31,8 @@ function Posts() {
                 <h3 className="title">{post.title}</h3>
                 <p className="body">{post.body}</p>
 
-                <button>EDIT</button>
-                <button>DELETE</button>
+                <button onClick={()=> handleEdit(post)} >EDIT</button>
+                <button onClick={()=>handleDelete(post.id)}>DELETE</button>
 
               </div>
             </div>

@@ -6,6 +6,8 @@ body{
   padding: 20px;
   background-color: #0f1115;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .posts {
