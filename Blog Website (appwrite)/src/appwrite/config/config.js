@@ -1,5 +1,5 @@
 import { conf } from "../../conf/conf";
-import { Client, ID, Storage, Query, TablesDB } from "appwrite";
+import { Client, ID, Storage, Query, TablesDB, Permission, Role } from "appwrite";
 
 
 class Database {
@@ -18,22 +18,39 @@ class Database {
   }
 
   // create new post saar 
-  async createPost({ title, slug, content, featuredIMG, status, userID }) {
+  async createPost({ title, content, featuredIMG, status, userID, slug, Date }) {
+
+
     try {
-      await this.databases.createRow({
+      return await this.databases.createRow({
         databaseId: conf.appwriteDbId,
         tableId: conf.appwriteTableId,
         rowId: ID.unique(),
         data: {
           title,
-          slug,
           content,
           featuredIMG,
+          // status: status === 'true',
           status,
           userID,
-        }
+          slug,
+          Date
+        },
+        permissions: (
+          status ? [
+            Permission.read(Role.any()),
+            Permission.update(Role.user(userID)),
+            Permission.delete(Role.user(userID))
+
+          ]
+          : [
+              Permission.read(Role.user(userID)),
+              Permission.update(Role.user(userID)),
+              Permission.delete(Role.user(userID))
+
+            ]
+        ),
       })
-      return true
 
     } catch (error) {
       console.log(`APPWRITE-CREATEPOST-ERROR: ${error}`);
@@ -44,11 +61,11 @@ class Database {
   // update post saar 
   async updatePost({ title, slug, rowId, content, featuredIMG, status, userID }) {
     try {
-      await this.databases.updateRow(
-        conf.appwriteDbId,
-        conf.appwriteTableId,
+      return await this.databases.updateRow({
+        tableId: conf.appwriteTableId,
+        databaseId: conf.appwriteDbId,
         rowId,
-        {
+        data: {
           title,
           content,
           featuredIMG,
@@ -56,11 +73,10 @@ class Database {
           userID,
           slug,
         }
-      )
-      return true
+      })
     } catch (error) {
       console.log(`updateRow Error: ${error}`);
-      return false
+      return error
     }
 
 
@@ -68,12 +84,15 @@ class Database {
   }
 
   // delete post saar
-  async deletePost() {
+  async deletePost(postId) {
 
     try {
-      await this.databases.deleteRow(
-        conf.appwriteDbId,
-        conf.appwriteTableId,
+      await this.databases.deleteRow({
+        tableId: conf.appwriteTableId,
+        databaseId: conf.appwriteDbId,
+        rowId: postId
+      },
+
       )
       return true
     } catch (error) {
@@ -85,70 +104,89 @@ class Database {
   // get post saar
   async getPost(rowId) {
     try {
-      await this.databases.getRow({
+     const res = await this.databases.getRow({
         databaseId: conf.appwriteDbId,
         tableId: conf.appwriteTableId,
         rowId,
       })
-      return true
+      return res
     } catch (error) {
       console.log(`getPost Error: ${error}`);
       return false
     }
   }
 
-  // get posts saar
-  async listPosts(){
+  // get post by slug
+  async getPostBySlug(slug) {
     try {
-      await this.databases.listRows({
+      const res = await this.databases.listRows({
         databaseId: conf.appwriteDbId,
         tableId: conf.appwriteTableId,
-        queries: [Query.equal('status','active')],
+        queries: [Query.equal('slug', slug)]
+      })
+      return res.rows[0]
+    } catch (error) {
+      console.log('GET-POST-BY-SLUG ERROR:', error);
+      return error
+    }
+  }
+
+
+  // get posts saar
+  async listPosts() {
+    try {
+      return await this.databases.listRows({
+        databaseId: conf.appwriteDbId,
+        tableId: conf.appwriteTableId,
+        queries: [Query.equal('status', true)],
       })
     } catch (error) {
       console.log(`listPosts Error: ${error}`);
-      
+      return error
+
     }
   }
 
   // upload file saar
-  async uploadFile(file){
+  async uploadFile(file) {
     try {
-      await this.storage.createFile({
+      return await this.storage.createFile({
         bucketId: conf.appwriteBucketId,
         fileId: ID.unique(),
         file: file,
       })
-      return true
     } catch (error) {
       console.log(`uploadFile Error: ${error}`);
-      return false
+      return error
     }
   }
 
   // delete post saar 
-  async deleteFile(fileId){
+  async deleteFile(fileId) {
     try {
-      await this.storage.deleteFile({
+      return await this.storage.deleteFile({
         bucketId: conf.appwriteBucketId,
         fileId,
       })
+
+
     } catch (error) {
       console.log(`deletePost Error: ${error}`);
-      
+      return false
+
     }
   }
 
   // get file preview 
-  async getFilePreview(fileId){
+  async getFilePreview(fileId) {
     try {
-      let file = await this.storage.getFilePreview({
+      let file = this.storage.getFileView({
         bucketId: conf.appwriteBucketId,
         fileId: fileId
       })
 
       return file
-      
+
     } catch (error) {
       console.log(`getFilePreview Error: ${error}`);
       return false

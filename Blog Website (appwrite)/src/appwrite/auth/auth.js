@@ -1,5 +1,5 @@
 import { conf } from "../../conf/conf";
-import { Client, Account, ID } from "appwrite";
+import { Client, Account } from "appwrite";
 
 
 export class AuthService {
@@ -20,10 +20,10 @@ export class AuthService {
                 userId: username,
                 email: email,
                 password: password,
-            })
+            })            
 
             if (user) {
-                this.loginUser({email,password})
+               return this.loginUser({email,password})
             }
             else {
                 return `Sorry, something went wrong please try agaian!`
@@ -57,14 +57,14 @@ export class AuthService {
        }
     }
 
-    async getAccount(){
+    async getAccountData(){
         try {
-             return await this.account.get()
+             const acc = await this.account.get()
+             return acc
         } catch (error) {
-             throw error
+             console.log(`getAccount Error: ${error}`);
+             return false
         }
-    
-        return null
 
     }
 
