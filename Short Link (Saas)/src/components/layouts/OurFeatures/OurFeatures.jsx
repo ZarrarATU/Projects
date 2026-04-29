@@ -1,4 +1,4 @@
-import { FeatureCard } from "../FeatureCard/FeatureCard"
+import { FeatureCard } from "../../common/FeatureCard/FeatureCard"
 
 export function OurFeatures() {
   return (

@@ -1,5 +1,5 @@
-import { Input } from "../components/Input/Input";
-import { Button } from "../components/Button/Button";
+import { Input } from "../components/common/Input/Input";
+import { Button } from "../components/common/Button/Button";
 import { useState } from "react";
 import { AuthService } from "../Appwrite/auth/auth";
 

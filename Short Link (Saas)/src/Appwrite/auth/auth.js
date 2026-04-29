@@ -1,6 +1,6 @@
 import { Client, Account,OAuthProvider } from "appwrite";
 import { conf } from "../../conf/conf";
-import { nanoid } from "@reduxjs/toolkit";
+import { ID } from "appwrite";
 
 
 
@@ -18,7 +18,7 @@ export class AuthService {
     async createAccount({ username, email, password }) {
         try {
             const user = await this.account.create({
-                userId: nanoid(16),
+                userId: ID.unique(),
                 name: username,
                 email: email,
                 password: password,

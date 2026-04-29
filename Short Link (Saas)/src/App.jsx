@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Outlet } from "react-router";
 import { AuthService } from "./Appwrite/auth/auth";
 import { login, logout } from "./store/authSlice";
-import { Loading } from "./components/Loading/Loading";
+import { Loading } from "./components/layouts/Loading/Loading";
 import { useMemo } from "react";
 
 function App() {

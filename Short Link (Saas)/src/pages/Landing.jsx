@@ -1,12 +1,11 @@
 import { FaQrcode, FaMousePointer, FaLink } from "react-icons/fa";
 import { MdQrCode, MdLink } from "react-icons/md";
 import { HiLink } from "react-icons/hi";
-import { ResponsiveText } from "../components/ResponsiveText/ResponsiveText";
+import { ResponsiveText } from "../components/common/ResponsiveText/ResponsiveText";
 import { motion } from "framer-motion";
-import { OurFeatures } from "../components/OurFeatures/OurFeatures";
-import { ReviewSlider } from "../components/ReviewSlider/ReviewSlider";
-import { TrustedPartners } from "../components/TrustedPartners/TrustedPartners";
-
+import { OurFeatures } from "../components/layouts/OurFeatures/OurFeatures";
+import { ReviewSlider } from "../components/common/ReviewSlider/ReviewSlider";
+import { TrustedPartners } from "../components/layouts/TrustedPartners/TrustedPartners";
 
 
 export function Landing() {

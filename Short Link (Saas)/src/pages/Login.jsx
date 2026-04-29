@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router"
-import { Input } from "../components/Input/Input"
+import { Input } from "../components/common/Input/Input"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { AuthService } from "../Appwrite/auth/auth"
-import { Button } from "../components/Button/Button"
+import { Button } from "../components/common/Button/Button"
 import { login } from '../store/authSlice'
 
 

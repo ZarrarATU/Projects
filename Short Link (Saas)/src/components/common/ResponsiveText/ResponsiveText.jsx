@@ -38,7 +38,7 @@ export function ResponsiveText({ children, delay = 1, hoverText = 'MORE' }) {
         ref.current.style.transition = "transform 2s ease, border-radius 2s ease"
         ref.current.style.transform = "translate(-50%, -50%) scale(20)"
 
-      }, 1000);
+      }, 700);
 
     }
   }
@@ -63,10 +63,10 @@ export function ResponsiveText({ children, delay = 1, hoverText = 'MORE' }) {
       <span
         ref={ref}
         style={{display: `${isDesktop ? 'flex' : 'none'}`}}
-        className='absolute -translate-x-1/2 -translate-y-1/2 p-4 flex flex-col justify-center items-center  pointer-events-none z-[100000] w-[180px] h-[180px] rounded-[50%] bg-white scale-0 group-hover:scale-100  transition-transform duration-600'
+        className='absolute -translate-x-1/2 -translate-y-1/2 p-4 flex flex-col justify-center items-center  pointer-events-none z-[100000] w-[150px] h-[150px] rounded-[50%] bg-white scale-0 group-hover:scale-100  transition-transform duration-300'
       >
-        <img className='w-[30px] transition-opacity duration-500' src="/images/up-arrow.svg" alt="->" />
-        <p className='text-black text-center font-[Manrope] text-[16px] transition-opacity duration-500'>{hoverText}</p>
+        <img className='w-[20px] transition-opacity duration-500' src="/images/up-arrow.svg" alt="->" />
+        <p className='text-black text-center font-[Ubuntu] text-[16px] transition-opacity duration-500'>{hoverText}</p>
       </span>
       <span className='absolute w-full h-full bg-[#9b78f5] top-0 left-0 -z-1 [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0_0_0_0)] transition-[clip-path] duration-500'>
 

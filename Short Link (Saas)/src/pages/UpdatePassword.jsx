@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Input } from "../components/Input/Input"
+import { Input } from "../components/common/Input/Input"
 import { AuthService } from "../Appwrite/auth/auth"
-import { Button } from "../components/Button/Button"
+import { Button } from "../components/common/Button/Button"
 import { useSearchParams } from "react-router"
 import { Link } from "react-router"
 
